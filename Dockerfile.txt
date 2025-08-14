@@ -1,7 +1,10 @@
 FROM python:3.11
 
-# Install system dependencies
+# Install system dependencies and build tools
 RUN apt-get update && apt-get install -y \
+    gcc \
+    make \
+    python3-dev \
     postgresql-client \
     libxml2-dev \
     libxslt1-dev \
@@ -16,6 +19,7 @@ WORKDIR /app
 
 COPY . /app
 
+# Upgrade pip and install python dependencies
 RUN pip install --upgrade pip \
     && pip install --no-cache-dir -r requirements.txt
 
