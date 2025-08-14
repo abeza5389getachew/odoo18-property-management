@@ -1,0 +1,20 @@
+<odoo>
+    <template id="report_lease_summary">
+        <t t-call="web.external_layout">
+            <main class="page">
+                <t t-foreach="docs" t-as="lease">
+                    <h2>Lease Summary</h2>
+                    <p><strong>Tenant:</strong> <span t-esc="lease.tenant_id.name"/></p>
+                    <p><strong>Property:</strong> <span t-esc="lease.property_id.name"/></p>
+                    <p><strong>Lease Duration:</strong> 
+                        <span t-esc="lease.start_date"/> - <span t-esc="lease.end_date"/>
+                    </p>
+                    <p><strong>Monthly Rent:</strong> <span t-esc="lease.monthly_rent"/></p>
+                    <p><strong>Total Paid Amount: </strong><span tesc="lease.total_paid_amount"/></p>
+                    <br/><br/>
+                    <p>Signature: ____________________________</p>
+                </t>
+            </main>
+        </t>
+    </template>
+</odoo>

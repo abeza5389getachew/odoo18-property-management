@@ -1,0 +1,112 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<odoo>
+    <!--list view-->
+    <record id = "view_rent_payment_list" model = "ir.ui.view">
+        <field name = "name">rent.payment.list</field>
+        <field name = "model">rent.payment</field>
+        <field name = "type">list</field>
+        <field name = "arch" type = "xml">
+            <list>
+                <field name="lease_id" />
+                <field name="payment_date" />
+                <field name="currency_id"/>
+
+                <field name="paid_amount" />
+                <field name="status" />
+                <field name="note" />
+            </list>
+        </field>
+    </record>
+    <!--form view-->
+    <record id = "view_rent_payment_form" model = "ir.ui.view">
+        <field name="name">rent.payment.form</field>
+        <field name="model">rent.payment</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="lease_id" />
+                            <field name="payment_date" />   
+                        </group>
+                        <group>
+                            <field name="currency_id"/>
+                            <field name="paid_amount" />
+                        </group>
+                    </group>
+                    <group>
+                        <field name="status" />
+                        <field name="note" />
+                    </group>
+                    <footer>
+                        <button name = 'mark_as_paid' type = 'object' string = 'Mark as Paid'
+                                class = 'btn_primary'
+                                invisible = "status == 'paid'" />
+                    </footer>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!--Kanban view-->
+    <record id="view_rent_payment_kanban" model="ir.ui.view">
+        <field name="name">rent.payment.kanban</field>
+        <field name="model">rent.payment</field>
+        <field name="type">kanban</field>
+        <field name="arch" type="xml">
+            <kanban>
+                <!--load fields needed in the template -->
+                <field name="lease_id" />
+                <field name="payment_date" />
+                <field name="currency_id"/>
+
+                <field name="paid_amount" />
+                <field name="status" />
+                <field name="note" />
+
+                <!--show the fields in the template-->
+                <template>
+                    <t t-name="kanban-box">
+                        <div class="oe_canban-card">
+                            <div>
+                                <strong>
+                                    <field name = "lease_id" />
+                                </strong>
+                                <br />
+                                <div>
+                                    <strong>Payment Date:</strong>
+                                    <field name="payment_date" />
+                                    
+                                </div>
+                                <br />
+                                <div>
+                                    <strong>Amount Paid:</strong>
+                                            <field name="currency_id"/>
+
+                                    <field name="paid_amount" />
+                                </div>
+                                <br />
+                                <div>
+                                    <strong>Status:</strong>
+                                    <field name="status" />
+                                </div>
+                                <br />
+                                <div>
+                                    <strong>Note:</strong>
+                                    <field name="note" />
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </template>
+            </kanban>
+        </field>
+    </record>
+    <!--action view-->
+    <record id = "action_rent_payment" model = "ir.actions.act_window">
+        <field name = "name">Rent Payment</field>
+        <field name = "res_model">rent.payment</field>
+        <field name = "view_mode">list,form,kanban</field>
+    </record>
+</odoo>

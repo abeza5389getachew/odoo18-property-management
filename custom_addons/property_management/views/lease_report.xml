@@ -1,0 +1,11 @@
+<odoo>
+    <record id="action_lease_summary_report" model="ir.actions.report">
+        <field name="name">Lease Summary Report</field>
+        <field name="model">property.lease</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">property_management.report_lease_summary</field>
+        <field name="report_file">property_management.report_lease_summary</field>
+        <field name="print_report_name">'Lease_Summary_' + (object.lease_name or '')</field>
+    </record>
+</odoo>
+

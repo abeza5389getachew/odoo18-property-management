@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <menuitem id="menu_property_management_root" name="Property Management" sequence="14"/>
+    
+    <menuitem id="menu_properties" name="Properties" parent="menu_property_management_root"
+        action="action_property_management" sequence="1"/>
+
+    <!--tenant menu-->
+    <menuitem id="menu_tenant" name="Tenants" parent="menu_property_management_root"
+        action="action_property_tenant" sequence="2"/>
+
+    <!--lease menu-->
+    <menuitem id="menu_lease" name="Leases" parent="menu_property_management_root"
+        action="action_property_lease" sequence="3"/>
+
+    <!--rent payment menu-->
+    <menuitem id="menu_rent_payment" name = "Rent Payment" parent = "menu_property_management_root"
+        action="action_rent_payment" sequence="4"/>
+        
+    
+</odoo>

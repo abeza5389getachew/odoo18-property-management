@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!--list view-->
+    <record id="view_property_management_list" model="ir.ui.view">
+        <field name="name">property.management.list</field>
+        <field name="model">property.management</field>
+        <field name="type">list</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name" />
+                <field name="property_type" />
+                <field name="price_per_month" />
+                <field name="status" />
+                <field name="image" widget="image" class="oe_avatar"/>
+                <field name="description" />
+            </list>
+        </field>
+    </record>
+    <!--form view-->
+    <record id="view_property_management_form" model="ir.ui.view">
+        <field name="name">property.management.form</field>
+        <field name="model">property.management</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                <header>
+                    <field name="status" widget="statusbar" options="{'clickable':true}"/>
+
+                </header>
+
+
+                    <group>
+                        <group>
+                            <field name="name" />
+                            <field name="property_type" />
+                        </group>
+                        <group>
+                            <field name="price_per_month" />
+                           <!-- <field name="image"/>   -->
+                           <field name="image" widget="image" class="oe_avatar" options="{'preview_image': 'image_medium'}"/>
+
+                        </group>
+                    </group>
+                        <label for="description" string ="Description" />
+                        <field name="description" />
+
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+     <!--Kanban view-->
+    <record id="view_property_management_kanban" model="ir.ui.view">
+        <field name="name">property.management.list</field>
+        <field name="model">property.management</field>
+        <field name="type">kanban</field>
+        <field name="arch" type="xml">
+            <kanban>
+                <!--load fields needed in the template -->
+                <field name="name" />
+                <field name="property_type" />
+                <field name="price_per_month" />
+                <field name="status" />
+                <field name="image"  />
+                <field name="description" />
+
+                <!--show the fields in the template-->
+                <template>
+                    <t t-name="kanban-box">
+                        <div class="oe_canban-card">
+                            <div>
+                                <field name="image" widget='image' class='oe_kanban_image' />
+                            </div>
+                            <div>
+                                <strong>
+                                    <field name = "name" />
+                                </strong>
+                                <br />
+                                <div>
+                                    <strong>Property Type:</strong>
+                                    <field name="property_type" />
+                                </div>
+                                <br />
+                                <div>
+                                    <strong>Price:</strong>
+                                    <field name="price_per_month" />
+                                </div>
+                                <br />
+                                <div>
+                                    <strong>Status:</strong>
+                                    <field name="status" />
+                                </div>
+                                <div>
+                                    <strong>Description:</strong>
+                                    <field name="description" />
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </template>
+            </kanban>
+        </field>
+    </record>
+    <!--action view-->
+    <record id="action_property_management" model = "ir.actions.act_window">
+        <field name="name">Property Management</field>
+        <field name="res_model">property.management</field>
+        <field name="view_mode">list,form,kanban</field>
+    </record>
+</odoo>

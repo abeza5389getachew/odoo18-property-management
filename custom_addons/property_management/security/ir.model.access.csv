@@ -1,0 +1,9 @@
+"id","name","model_id:id","group_id:id","perm_read","perm_write","perm_create","perm_unlink"
+"access_property_manager","access.property.manager","model_property_management","property_management.group_property_manager",1,1,1,1
+"access_property_accountant","access.property.accountant","model_property_management","property_management.group_property_accountant",1,0,0,0
+"access_tenant_manager","access.tenant.manager","model_property_tenant","property_management.group_property_manager",1,1,1,1
+"access_tenant_accountant","access.tenant.accountant","model_property_tenant","property_management.group_property_accountant",1,0,0,0
+"access_lease_manager","access.lease.manager","model_property_lease","property_management.group_property_manager",1,1,1,1
+"access_lease_accountant","access.lease.accountant","model_property_lease","property_management.group_property_accountant",1,0,0,0
+"access_rent_payment_manager","access.rent.payment.manager","model_rent_payment","property_management.group_property_manager",1,1,1,1
+"access_rent_payment_accountant","access.rent.payment.accountant","model_rent_payment","property_management.group_property_accountant",1,0,0,0
