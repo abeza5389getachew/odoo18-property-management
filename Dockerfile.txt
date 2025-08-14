@@ -1,0 +1,18 @@
+# Use official Odoo 18 image
+FROM odoo:18.0
+
+# Install extra Python dependencies
+COPY requirements.txt /tmp/requirements.txt
+RUN pip install --no-cache-dir -r /tmp/requirements.txt
+
+# Copy everything into the container
+COPY . /mnt/extra-addons
+
+# Set Odoo config path
+ENV ODOO_RC=/mnt/extra-addons/odoo.conf
+
+# Expose Odoo default port
+EXPOSE 8069
+
+# Start Odoo
+CMD ["odoo", "-c", "/mnt/extra-addons/odoo.conf"]
