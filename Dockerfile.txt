@@ -1,29 +1,24 @@
-FROM python:3.10
+FROM python:3.10-slim
 
-# Install system dependencies and build tools
+# Install system dependencies
 RUN apt-get update && apt-get install -y \
-    gcc \
-    g++ \
-    make \
-    python3-dev \
     libldap2-dev \
     libsasl2-dev \
+    libssl-dev \
     libxml2-dev \
     libxslt1-dev \
     libpq-dev \
-    libjpeg-dev \
-    libpng-dev \
-    postgresql-client \
+    build-essential \
     && rm -rf /var/lib/apt/lists/*
 
+# Copy your Odoo code
 WORKDIR /app
-
 COPY . /app
 
-# Upgrade pip and install python dependencies
-RUN pip install --upgrade pip \
-    && pip install --no-cache-dir -r requirements.txt
+# Install Python dependencies
+RUN pip install --no-cache-dir -r requirements.txt
 
-EXPOSE 10000
+# Expose Odoo default port
+EXPOSE 8069
 
-CMD ["python", "odoo/odoo-bin", "-c", "odoo.conf"]
+CMD ["python", "odoo-bin", "--config=odoo.conf"]
