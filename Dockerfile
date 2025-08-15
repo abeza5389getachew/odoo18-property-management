@@ -15,8 +15,7 @@ RUN apt-get update && apt-get install -y \
 WORKDIR /mnt/extra-addons
 
 # Copy custom addons
-COPY ./property_management /mnt/extra-addons/property_management
-
+COPY ./custom_addons/property_management /mnt/extra-addons/property_management
 # Install Odoo
 RUN pip install wheel setuptools \
     && pip install odoo==18.0
@@ -30,3 +29,4 @@ EXPOSE 8069
 
 # Default command
 CMD ["odoo", "-c", "/etc/odoo/odoo.conf"]
+
