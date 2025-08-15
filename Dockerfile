@@ -1,33 +1,32 @@
-FROM python:3.12-slim
+FROM python:3.10-slim
 
-# Install system dependencies
+# Install system dependencies and libssl1.1 manually
 RUN apt-get update && apt-get install -y \
     git build-essential python3-dev libldap2-dev libsasl2-dev libpq-dev curl fontconfig libxrender1 libxext6 xfonts-75dpi xfonts-base \
+    && curl -o /tmp/libssl1.1.deb -SL http://security.debian.org/debian-security/pool/updates/main/o/openssl/libssl1.1_1.1.1w-0+deb11u1_amd64.deb \
+    && apt install -y /tmp/libssl1.1.deb \
+    && rm /tmp/libssl1.1.deb \
     && curl -o /tmp/wkhtml.deb -SL https://github.com/wkhtmltopdf/packaging/releases/download/0.12.6-1/wkhtmltox_0.12.6-1.buster_amd64.deb \
     && apt install -y /tmp/wkhtml.deb \
     && rm /tmp/wkhtml.deb \
     && rm -rf /var/lib/apt/lists/*
 
-# Create odoo user
-RUN useradd -m -d /var/lib/odoo -U -r -s /bin/bash odoo
-
 # Set working directory
-WORKDIR /odoo
+WORKDIR /mnt/extra-addons
 
-# Copy requirements first for caching
-COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
+# Copy custom addons
+COPY ./property_management /mnt/extra-addons/property_management
 
-# Copy all files
-COPY . .
+# Install Odoo
+RUN pip install wheel setuptools \
+    && pip install odoo==18.0
 
-# Change ownership
-RUN chown -R odoo:odoo /odoo
-
-USER odoo
+# Set environment variables
+ENV ODOO_RC=/etc/odoo/odoo.conf
+ENV ADDONS_PATH=/mnt/extra-addons,/usr/lib/python3/dist-packages/odoo/addons
 
 # Expose Odoo port
 EXPOSE 8069
 
-# Run Odoo
-CMD ["python3", "odoo-bin", "-c", "odoo.conf"]
+# Default command
+CMD ["odoo", "-c", "/etc/odoo/odoo.conf"]
