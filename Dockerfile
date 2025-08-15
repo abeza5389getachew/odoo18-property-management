@@ -1,27 +1,21 @@
-FROM python:3.10-slim
+FROM python:3.10
 
 # Install system dependencies
 RUN apt-get update && apt-get install -y \
-    libldap2-dev \
-    libsasl2-dev \
-    libssl-dev \
-    libxml2-dev \
-    libxslt1-dev \
-    libpq-dev \
-    build-essential \
+    git build-essential python3-dev libldap2-dev libsasl2-dev libpq-dev wkhtmltopdf \
     && rm -rf /var/lib/apt/lists/*
 
-# Set work directory
-WORKDIR /app
+# Clone Odoo core
+RUN git clone --depth=1 --branch 18.0 https://github.com/odoo/odoo.git /odoo
 
-# Copy files
-COPY . /app
+# Copy your custom modules
+COPY . /mnt/extra-addons
 
-# Install Python packages
-RUN pip install --no-cache-dir -r requirements.txt
+# Install Python dependencies
+RUN pip install -r /odoo/requirements.txt
 
-# Expose Odoo default port
+# Expose Odoo port
 EXPOSE 8069
 
-# Start Odoo
-CMD ["python", "odoo-bin", "--config=odoo.conf"]
+# Set entrypoint
+CMD ["python", "/odoo/odoo-bin", "--addons-path=/odoo/addons,/mnt/extra-addons", "--db_host=$DB_HOST", "--db_port=$DB_PORT", "--db_user=$DB_USER", "--db_password=$DB_PASSWORD"]
