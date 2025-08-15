@@ -1,6 +1,17 @@
 services:
   - type: web
-    name: odoo
+    name: odoo18
     env: python
-    buildCommand: pip install -r requirements.txt
-    startCommand: ./start.sh
+    buildCommand: |
+      apt-get update && apt-get install -y \
+        libldap2-dev \
+        libsasl2-dev \
+        libssl-dev \
+        libxml2-dev \
+        libxslt1-dev \
+        libpq-dev \
+        && pip install -r requirements.txt
+    startCommand: python odoo-bin --config=odoo.conf
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.10.1
