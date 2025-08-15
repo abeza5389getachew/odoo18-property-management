@@ -37,5 +37,7 @@ Werkzeug
 xlrd
 XlsxWriter
 xlwt
+ldap3
 
 # Add your custom module requirements below
+
