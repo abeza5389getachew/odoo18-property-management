@@ -11,14 +11,17 @@ RUN apt-get update && apt-get install -y \
     build-essential \
     && rm -rf /var/lib/apt/lists/*
 
-# Copy your Odoo code
+# Set work directory
 WORKDIR /app
+
+# Copy files
 COPY . /app
 
-# Install Python dependencies
+# Install Python packages
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Expose Odoo default port
 EXPOSE 8069
 
+# Start Odoo
 CMD ["python", "odoo-bin", "--config=odoo.conf"]
